@@ -53,7 +53,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate {
             section.append(item)
         }
         
-    }    
+    }
 }
 
 var isCustomLayout = false

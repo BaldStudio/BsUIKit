@@ -31,38 +31,42 @@ open class BsTableView: UITableView {
 
     open func commonInit() {
         
+        delegate = bs.proxy
         dataSource = bs.dataSource
         
-        bs.proxy.dataSource = bs.dataSource
         bs.proxy.tableView = self
     }
        
     // MARK: - Override
 
     open override var dataSource: UITableViewDataSource? {
-        get {
-            bs.dataSource
-        }
         set {
             if let dataSource = newValue as? BsTableViewDataSource {
                 super.dataSource = dataSource
                 bs.dataSource = dataSource
+                bs.proxy.dataSource = dataSource
                 dataSource.tableView = self
             }
             else {
                 super.dataSource = newValue
             }
         }
+        get {
+            bs.dataSource
+        }
     }
     
     open override var delegate: UITableViewDelegate? {
         set {
-            if newValue == nil {
+            guard let newValue = newValue else {
                 bs.proxy.target = nil
                 return
             }
             
-            bs.proxy.target = newValue
+            if !(newValue is BsTableViewProxy) {
+                bs.proxy.target = newValue
+            }
+            
             super.delegate = bs.proxy
         }
         get {

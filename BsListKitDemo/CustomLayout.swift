@@ -9,7 +9,7 @@
 import UIKit
 
 // MARK: - MBGridViewLayoutDelegate
-public protocol WBGridViewLayoutDelegate: class {
+public protocol WBGridViewLayoutDelegate: AnyObject {
     func colectionView(_ collectionView: UICollectionView, numberOfItemsInRow row: Int) -> CellLayout
     func colectionView(_ collectionView: UICollectionView, sizeOfItemInRow row: Int) -> CGSize?
 }

@@ -30,9 +30,9 @@ open class BsCollectionView: UICollectionView {
     }
 
     open func commonInit() {
+        delegate = bs.proxy
         dataSource = bs.dataSource
         
-        bs.proxy.dataSource = bs.dataSource
         bs.proxy.collectionView = self
     }
     
@@ -46,6 +46,7 @@ open class BsCollectionView: UICollectionView {
             if let dataSource = newValue as? BsCollectionViewDataSource {
                 super.dataSource = dataSource
                 bs.dataSource = dataSource
+                bs.proxy.dataSource = dataSource
                 dataSource.collectionView = self
             }
             else {
@@ -56,12 +57,15 @@ open class BsCollectionView: UICollectionView {
     
     open override var delegate: UICollectionViewDelegate? {
         set {
-            if newValue == nil {
-                super.delegate = nil
+            guard let newValue = newValue else {
+                bs.proxy.target = nil
                 return
             }
             
-            bs.proxy.target = newValue
+            if !(newValue is BsCollectionViewProxy) {
+                bs.proxy.target = newValue
+            }
+            
             super.delegate = bs.proxy
         }
         get {

@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         setupTableView()
         
         setupDataSource()
@@ -41,5 +41,6 @@ class ViewController: UIViewController, UITableViewDelegate {
         row.vc = self
         section.append(row)
     }
+    
 }
 
