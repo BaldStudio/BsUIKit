@@ -196,3 +196,16 @@ extension BsTableViewSection: Equatable {
     }
     
 }
+
+public extension BsTableViewSection {
+    
+    @inlinable
+    static func += (left: BsTableViewSection, right: Child) {
+        left.append(right)
+    }
+    
+    @inlinable
+    static func -= (left: BsTableViewSection, right: Child) {
+        left.remove(right)
+    }
+}

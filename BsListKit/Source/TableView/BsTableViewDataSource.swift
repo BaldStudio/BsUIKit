@@ -124,3 +124,17 @@ extension BsTableViewDataSource: UITableViewDataSource {
     }
     
 }
+
+public extension BsTableViewDataSource {
+    
+    @inlinable
+    static func += (left: BsTableViewDataSource, right: Child) {
+        left.append(right)
+    }
+    
+    @inlinable
+    static func -= (left: BsTableViewDataSource, right: Child) {
+        left.remove(right)
+    }
+
+}

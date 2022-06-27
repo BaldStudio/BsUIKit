@@ -131,3 +131,17 @@ extension BsCollectionViewDataSource: UICollectionViewDataSource {
                                                       at: indexPath)
     }
 }
+
+public extension BsCollectionViewDataSource {
+    
+    @inlinable
+    static func += (left: BsCollectionViewDataSource, right: Child) {
+        left.append(right)
+    }
+    
+    @inlinable
+    static func -= (left: BsCollectionViewDataSource, right: Child) {
+        left.remove(right)
+    }
+
+}

@@ -224,3 +224,17 @@ extension BsCollectionViewSection: Equatable {
     }
     
 }
+
+public extension BsCollectionViewSection {
+    
+    @inlinable
+    static func += (left: BsCollectionViewSection, right: Child) {
+        left.append(right)
+    }
+    
+    @inlinable
+    static func -= (left: BsCollectionViewSection, right: Child) {
+        left.remove(right)
+    }
+
+}
