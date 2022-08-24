@@ -1,5 +1,5 @@
-# BsListKit
+# BsUIKit
 A simple toolkit.
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/BaldStudio/BsListKit/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/BaldStudio/BsUIKit/master/LICENSE)
 ![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg)
