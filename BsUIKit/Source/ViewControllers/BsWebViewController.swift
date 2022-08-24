@@ -7,24 +7,24 @@
 //
 
 import UIKit
+import WebKit
 
-open class BsWebViewController: BsViewController {
-
+open class BsWebViewController: BsViewController, WKUIDelegate, WKNavigationDelegate {
+    
+    open class func setupDefaultWebView() -> WKWebView {
+        WKWebView(frame: .zero)
+    }
+    
+    @Lazy(body: setupDefaultWebView)
+    open var webView: WKWebView!
+        
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.addSubview(webView)
+        webView.bs.edgesEqualToSuperview()
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
