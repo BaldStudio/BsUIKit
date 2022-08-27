@@ -18,20 +18,27 @@ Pod::Spec.new do |s|
   
   s.ios.dependency 'BsFoundation'
   
+  s.subspec 'ViewControllers' do |ss|
+    ss.ios.source_files = 'BsUIKit/Source/ViewControllers/**/*'
+  end
+
   s.subspec 'TableView' do |ss|
-      ss.ios.source_files = 'BsUIKit/Source/TableView/**/*'
+    ss.ios.source_files = 'BsUIKit/Source/TableView/**/*'
+    ss.ios.dependency 'ViewControllers'
   end
   
   s.subspec 'CollectionView' do |ss|
-      ss.ios.source_files = 'BsUIKit/Source/CollectionView/**/*'
+    ss.ios.source_files = 'BsUIKit/Source/CollectionView/**/*'
+    ss.ios.dependency 'ViewControllers'
   end
-  
-  s.subspec 'ViewControllers' do |ss|
-      ss.ios.source_files = 'BsUIKit/Source/ViewControllers/**/*'
+    
+  s.subspec 'WebView' do |ss|
+    ss.ios.source_files = 'BsUIKit/Source/WebView/**/*'
+    ss.ios.dependency 'ViewControllers'
   end
-  
+
   s.subspec 'Widgets' do |ss|
-      ss.ios.source_files = 'BsUIKit/Source/Widgets/**/*'
+    ss.ios.source_files = 'BsUIKit/Source/Widgets/**/*'
   end
 
 end

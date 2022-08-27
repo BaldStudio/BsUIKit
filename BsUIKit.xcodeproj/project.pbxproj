@@ -164,11 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				D20F0A6128B5C83B00BD6E4C /* BsViewController.swift */,
-				D20F0A6328B5C86B00BD6E4C /* BsWebViewController.swift */,
 				D20F0A6528B5C88700BD6E4C /* BsTabBarController.swift */,
 				D20F0A6728B5C89200BD6E4C /* BsNavigationController.swift */,
-				D20F0A6928B5C8F600BD6E4C /* BsTableViewController.swift */,
-				D20F0A6B28B5C90000BD6E4C /* BsCollectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -176,6 +173,7 @@
 		D20F0A6D28B5CB5400BD6E4C /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				D20F0A6928B5C8F600BD6E4C /* BsTableViewController.swift */,
 				D20F0A7A28B5CCEB00BD6E4C /* BsTableView.swift */,
 				D20F0A7C28B5CCEB00BD6E4C /* BsTableViewDataSource.swift */,
 				D20F0A7D28B5CCEB00BD6E4C /* BsTableViewProxy.swift */,
@@ -188,6 +186,7 @@
 		D20F0A6E28B5CB5A00BD6E4C /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				D20F0A6B28B5C90000BD6E4C /* BsCollectionViewController.swift */,
 				D20F0A6F28B5CCD800BD6E4C /* BsCollectionView.swift */,
 				D20F0A7128B5CCD800BD6E4C /* BsCollectionViewDataSource.swift */,
 				D20F0A7028B5CCD800BD6E4C /* BsCollectionViewItem.swift */,
@@ -195,6 +194,14 @@
 				D20F0A7328B5CCD800BD6E4C /* BsCollectionViewSection.swift */,
 			);
 			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		D20F0BC728B9B34400BD6E4C /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				D20F0A6328B5C86B00BD6E4C /* BsWebViewController.swift */,
+			);
+			path = WebView;
 			sourceTree = "<group>";
 		};
 		D23DCF1D2595CCAC004EB5E3 /* Supporting Files */ = {
@@ -263,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				D27A8A982520AEAC006A6125 /* BsUIKit.swift */,
+				D20F0BC728B9B34400BD6E4C /* WebView */,
 				D20F0A6D28B5CB5400BD6E4C /* TableView */,
 				D20F0A6E28B5CB5A00BD6E4C /* CollectionView */,
 				D20F0A5728B5C7EC00BD6E4C /* ViewControllers */,
