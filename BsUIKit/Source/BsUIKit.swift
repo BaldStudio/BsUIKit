@@ -14,3 +14,11 @@ let logger: BsLogger = {
     logger.level = .none
     return logger
 }()
+
+public struct Screen {
+    public static let bounds = UIScreen.main.bounds
+    public static let size = bounds.size
+    public static let width = bounds.width
+    public static let height = bounds.height
+    public static let scale = UIScreen.main.scale
+}
