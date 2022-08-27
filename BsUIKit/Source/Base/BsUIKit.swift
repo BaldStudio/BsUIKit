@@ -6,7 +6,7 @@
 //  Copyright © 2021 BaldStudio. All rights reserved.
 //
 
-@_exported import BsFoundation
+import BsFoundation
 
 let logger: BsLogger = {
     let logger = BsLogger(subsystem: "com.bald-studio.BsUIKit",

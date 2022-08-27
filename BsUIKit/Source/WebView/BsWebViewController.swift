@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import BsFoundation
 
 open class BsWebViewController: BsViewController, WKUIDelegate, WKNavigationDelegate {
     

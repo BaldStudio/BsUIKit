@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BsFoundation
 
 open class BsCollectionViewController: BsViewController, UICollectionViewDelegate {
     

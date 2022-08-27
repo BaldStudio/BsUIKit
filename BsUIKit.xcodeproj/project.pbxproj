@@ -160,14 +160,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		D20F0A5728B5C7EC00BD6E4C /* ViewControllers */ = {
+		D20A133F28B9BC8B0024ACCB /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				D27A8A982520AEAC006A6125 /* BsUIKit.swift */,
 				D20F0A6128B5C83B00BD6E4C /* BsViewController.swift */,
 				D20F0A6528B5C88700BD6E4C /* BsTabBarController.swift */,
 				D20F0A6728B5C89200BD6E4C /* BsNavigationController.swift */,
 			);
-			path = ViewControllers;
+			path = Base;
 			sourceTree = "<group>";
 		};
 		D20F0A6D28B5CB5400BD6E4C /* TableView */ = {
@@ -269,11 +270,10 @@
 		D27A8A28252052BE006A6125 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D27A8A982520AEAC006A6125 /* BsUIKit.swift */,
+				D20A133F28B9BC8B0024ACCB /* Base */,
 				D20F0BC728B9B34400BD6E4C /* WebView */,
 				D20F0A6D28B5CB5400BD6E4C /* TableView */,
 				D20F0A6E28B5CB5A00BD6E4C /* CollectionView */,
-				D20F0A5728B5C7EC00BD6E4C /* ViewControllers */,
 				D2A3333527D09BB900705185 /* Widgets */,
 			);
 			path = Source;
