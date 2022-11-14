@@ -37,14 +37,11 @@
 		D23FF0E525AD9C5600D755D9 /* BsUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27A8A1D25203F1A006A6125 /* BsUIKit.framework */; platformFilter = ios; };
 		D25B91B02856DC8700D66FAF /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B91AF2856DC8700D66FAF /* Material.swift */; };
 		D27A8A992520AEAC006A6125 /* BsUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27A8A982520AEAC006A6125 /* BsUIKit.swift */; };
-		D27DE072292243E40018A868 /* AppletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE06F292243E40018A868 /* AppletViewController.swift */; };
-		D27DE073292243E40018A868 /* Applet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE070292243E40018A868 /* Applet.swift */; };
-		D27DE074292243E40018A868 /* AppletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE071292243E40018A868 /* AppletManager.swift */; };
-		D27DE077292243EC0018A868 /* Manifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE075292243EC0018A868 /* Manifest.swift */; };
-		D27DE078292243EC0018A868 /* BsContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE076292243EC0018A868 /* BsContext.swift */; };
-		D27DE07B292243FA0018A868 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE079292243FA0018A868 /* Service.swift */; };
-		D27DE07C292243FA0018A868 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE07A292243FA0018A868 /* ServiceManager.swift */; };
-		D27DE07E292244000018A868 /* BsCoreServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE07D292244000018A868 /* BsCoreServices.swift */; };
+		D27DE084292244340018A868 /* AppletManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE07F292244340018A868 /* AppletManifest.swift */; };
+		D27DE085292244340018A868 /* AppletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE080292244340018A868 /* AppletManager.swift */; };
+		D27DE086292244340018A868 /* AppletContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE081292244340018A868 /* AppletContext.swift */; };
+		D27DE087292244340018A868 /* Applet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE082292244340018A868 /* Applet.swift */; };
+		D27DE088292244340018A868 /* AppletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE083292244340018A868 /* AppletViewController.swift */; };
 		D2A3333827D09C0E00705185 /* BsGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A3333727D09C0E00705185 /* BsGradientView.swift */; };
 		D2A3334027D0BCBF00705185 /* BsBoxLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A3333F27D0BCBF00705185 /* BsBoxLabel.swift */; };
 		D2A3334227D0C91F00705185 /* HapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A3334127D0C91F00705185 /* HapticEngine.swift */; };
@@ -108,14 +105,11 @@
 		D25B91AF2856DC8700D66FAF /* Material.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		D27A8A1D25203F1A006A6125 /* BsUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BsUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D27A8A982520AEAC006A6125 /* BsUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BsUIKit.swift; sourceTree = "<group>"; };
-		D27DE06F292243E40018A868 /* AppletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletViewController.swift; sourceTree = "<group>"; };
-		D27DE070292243E40018A868 /* Applet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Applet.swift; sourceTree = "<group>"; };
-		D27DE071292243E40018A868 /* AppletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletManager.swift; sourceTree = "<group>"; };
-		D27DE075292243EC0018A868 /* Manifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manifest.swift; sourceTree = "<group>"; };
-		D27DE076292243EC0018A868 /* BsContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BsContext.swift; sourceTree = "<group>"; };
-		D27DE079292243FA0018A868 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		D27DE07A292243FA0018A868 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
-		D27DE07D292244000018A868 /* BsCoreServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BsCoreServices.swift; sourceTree = "<group>"; };
+		D27DE07F292244340018A868 /* AppletManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletManifest.swift; sourceTree = "<group>"; };
+		D27DE080292244340018A868 /* AppletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletManager.swift; sourceTree = "<group>"; };
+		D27DE081292244340018A868 /* AppletContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletContext.swift; sourceTree = "<group>"; };
+		D27DE082292244340018A868 /* Applet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Applet.swift; sourceTree = "<group>"; };
+		D27DE083292244340018A868 /* AppletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletViewController.swift; sourceTree = "<group>"; };
 		D297DB782568F6390096BD54 /* BsUIKit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BsUIKit-Info.plist"; sourceTree = "<group>"; };
 		D2A3333727D09C0E00705185 /* BsGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BsGradientView.swift; sourceTree = "<group>"; };
 		D2A3333F27D0BCBF00705185 /* BsBoxLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BsBoxLabel.swift; sourceTree = "<group>"; };
@@ -299,14 +293,11 @@
 		D27DE06E292243D50018A868 /* Applet */ = {
 			isa = PBXGroup;
 			children = (
-				D27DE070292243E40018A868 /* Applet.swift */,
-				D27DE071292243E40018A868 /* AppletManager.swift */,
-				D27DE06F292243E40018A868 /* AppletViewController.swift */,
-				D27DE076292243EC0018A868 /* BsContext.swift */,
-				D27DE075292243EC0018A868 /* Manifest.swift */,
-				D27DE079292243FA0018A868 /* Service.swift */,
-				D27DE07A292243FA0018A868 /* ServiceManager.swift */,
-				D27DE07D292244000018A868 /* BsCoreServices.swift */,
+				D27DE082292244340018A868 /* Applet.swift */,
+				D27DE081292244340018A868 /* AppletContext.swift */,
+				D27DE080292244340018A868 /* AppletManager.swift */,
+				D27DE07F292244340018A868 /* AppletManifest.swift */,
+				D27DE083292244340018A868 /* AppletViewController.swift */,
 			);
 			path = Applet;
 			sourceTree = "<group>";
@@ -567,33 +558,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				D20F0A6A28B5C8F600BD6E4C /* BsTableViewController.swift in Sources */,
-				D27DE07B292243FA0018A868 /* Service.swift in Sources */,
 				D25B91B02856DC8700D66FAF /* Material.swift in Sources */,
 				D2A3333827D09C0E00705185 /* BsGradientView.swift in Sources */,
+				D27DE087292244340018A868 /* Applet.swift in Sources */,
 				D20F0A8228B5CCEB00BD6E4C /* BsTableViewProxy.swift in Sources */,
 				D20F0A7E28B5CCEB00BD6E4C /* BsTableViewRow.swift in Sources */,
 				D27A8A992520AEAC006A6125 /* BsUIKit.swift in Sources */,
 				D20F0A7728B5CCD800BD6E4C /* BsCollectionViewProxy.swift in Sources */,
+				D27DE085292244340018A868 /* AppletManager.swift in Sources */,
 				D214742F2841551E00B809EF /* BsCopyableLabel.swift in Sources */,
 				D20F0A6828B5C89200BD6E4C /* BsNavigationController.swift in Sources */,
 				D20F0A6C28B5C90000BD6E4C /* BsCollectionViewController.swift in Sources */,
-				D27DE078292243EC0018A868 /* BsContext.swift in Sources */,
 				D20F0A7428B5CCD800BD6E4C /* BsCollectionView.swift in Sources */,
-				D27DE07C292243FA0018A868 /* ServiceManager.swift in Sources */,
 				D2A3334027D0BCBF00705185 /* BsBoxLabel.swift in Sources */,
 				D20F0A6228B5C83B00BD6E4C /* BsViewController.swift in Sources */,
-				D27DE073292243E40018A868 /* Applet.swift in Sources */,
+				D27DE088292244340018A868 /* AppletViewController.swift in Sources */,
 				D20F0A7828B5CCD800BD6E4C /* BsCollectionViewSection.swift in Sources */,
 				D20F0A6628B5C88700BD6E4C /* BsTabBarController.swift in Sources */,
 				D20F0A6428B5C86B00BD6E4C /* BsWebViewController.swift in Sources */,
 				D20F0A7628B5CCD800BD6E4C /* BsCollectionViewDataSource.swift in Sources */,
-				D27DE07E292244000018A868 /* BsCoreServices.swift in Sources */,
 				D20F0A8028B5CCEB00BD6E4C /* BsTableViewSection.swift in Sources */,
-				D27DE074292243E40018A868 /* AppletManager.swift in Sources */,
-				D27DE072292243E40018A868 /* AppletViewController.swift in Sources */,
+				D27DE086292244340018A868 /* AppletContext.swift in Sources */,
 				D20F0A7528B5CCD800BD6E4C /* BsCollectionViewItem.swift in Sources */,
-				D27DE077292243EC0018A868 /* Manifest.swift in Sources */,
 				D20F0A8128B5CCEB00BD6E4C /* BsTableViewDataSource.swift in Sources */,
+				D27DE084292244340018A868 /* AppletManifest.swift in Sources */,
 				D20F0A7F28B5CCEB00BD6E4C /* BsTableView.swift in Sources */,
 				D2A3334227D0C91F00705185 /* HapticEngine.swift in Sources */,
 			);

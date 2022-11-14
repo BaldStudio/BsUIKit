@@ -1,20 +1,19 @@
 //
 //  AppletManager.swift
-//  BsCoreServices
+//  BsUIKit
 //
-//  Created by crzorz on 2022/5/19.
+//  Created by crzorz on 2022/11/14.
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
-import Foundation
-import BsFoundation
+import UIKit
 
-class AppletManager: Service {
+class AppletManager {
     
     var applets: ContiguousArray<Applet> = []
     var residentApplets: ContiguousArray<Applet> = []
 
-    var manifestsById: [String: Manifest] = [:]
+    var manifestsById: [String: AppletManifest] = [:]
 
     init() {
         
@@ -65,24 +64,27 @@ extension AppletManager {
 
     @discardableResult
     static func pop(to target: Applet? = nil) -> Applet? {
+        defer {
+            logger.debug("当前应用 \(lastAppet?.description ?? "nil")")
+        }
+        
         if let target = target {
-            for a in shared.applets.reversed() {
-                if a == target {
+            for applet in shared.applets.reversed() {
+                if applet == target {
                     target.willEnterForeground()
                     return target
                 }
 
-                if a.shouldTerminate {
-                    a.willTerminate()
+                if applet.shouldTerminate {
+                    applet.willTerminate()
                 }
                 else {
-                    a.didEnterBackground()
+                    applet.didEnterBackground()
                 }
                 
                 shared.applets.removeLast()
                 
             }
-
             return target
         }
 
@@ -108,7 +110,7 @@ extension AppletManager {
         }
 
         lastAppet?.willEnterForeground()
-        
+                
         return applet
     }
 }
@@ -118,7 +120,7 @@ extension AppletManager {
 
 extension AppletManager {
     
-    static func add(manifest: Manifest) {
+    static func add(manifest: AppletManifest) {
         shared.manifestsById[manifest.id] = manifest
     }
     

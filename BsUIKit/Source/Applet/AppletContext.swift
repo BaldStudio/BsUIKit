@@ -1,25 +1,25 @@
 //
-//  BsContext.swift
-//  BsCoreServices
+//  AppletContext.swift
+//  BsUIKit
 //
-//  Created by crzorz on 2022/5/12.
+//  Created by crzorz on 2022/11/14.
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
 import UIKit
 
-public struct BsContext: Service {
-    
+public struct AppletContext {
     init() {
         
     }
     
-    public static let shared = BsContext()
+    public static let shared = AppletContext()
+
 }
 
 //MARK: - Applet
 
-public extension BsContext {
+public extension AppletContext {
     
     struct LaunchOptions {
         public var params: [String: Any]? = nil
@@ -27,7 +27,7 @@ public extension BsContext {
         public var completion: (() -> Void)? = nil
     }
     
-    static var currentApplet: Applet? {
+    static var topApplet: Applet? {
         AppletManager.lastAppet
     }
     
@@ -35,30 +35,42 @@ public extension BsContext {
         AppletManager.lookup(applet: id) ?? AppletManager.lookup(residentApplet: id)
     }
     
-    static func register(applet manifest: Manifest) {
+    static func register(applet manifest: AppletManifest) {
         AppletManager.add(manifest: manifest)
     }
 }
 
-public extension BsContext {
+public extension AppletContext {
     
-    static var navigationController: UINavigationController!
+    static var navigator: UINavigationController!
 
     static func push(_ viewController: UIViewController, animated: Bool = true) {
-        navigationController.pushViewController(viewController,
-                                                animated: animated)
+        navigator.pushViewController(viewController,
+                                     animated: animated)
+    }
+    
+    static func pop(animated: Bool = true) {
+        navigator.popViewController(animated: animated)
+    }
+    
+    static func pop(to viewController: UIViewController, animated: Bool = true) {
+        navigator.popToViewController(viewController,
+                                      animated: animated)
     }
 }
 
-public extension BsContext {
+public extension AppletContext {
     
     @discardableResult
     static func start(applet id: String,
                       closure: ((inout LaunchOptions) -> Void)? = nil) -> Applet? {
-        let app = lookup(applet: id) ?? AppletManager.create(by: id)
+        let appet = lookup(applet: id) ?? AppletManager.create(by: id)
 
-        /// 是否要默认给个404的applet
-        guard let toApp = app else { logger.debug("未找到 Applet: \(id)");  return nil }
+        // TODO: 默认给个404的applet
+        guard let toApplet = appet else {
+            logger.debug("未找到 Applet: \(id)")
+            return nil
+        }
 
         var options: LaunchOptions? = nil
         if let closure = closure {
@@ -66,34 +78,33 @@ public extension BsContext {
             closure(&(options!))
         }
 
-        let fromApp = AppletManager.lastAppet
+        let fromApplet = AppletManager.lastAppet
 
-        if toApp.launched {
-            toApp.willEnterForeground()
+        if toApplet.isLaunched {
+            toApplet.willEnterForeground()
         }
         else {
-            toApp.willFinishLaunching(options: options?.params)
+            toApplet.willFinishLaunching(options: options?.params)
         }
 
-        AppletManager.push(toApp)
+        AppletManager.push(toApplet)
 
         let animated = options?.animated ?? true
         CATransaction.setCompletionBlock(options?.completion)
         CATransaction.begin()
-        navigationController?.pushViewController(toApp.rootViewController,
-                                                 animated: animated)
+        push(toApplet.root, animated: animated)
         CATransaction.commit()
 
-        fromApp?.didEnterBackground()
+        fromApplet?.didEnterBackground()
 
-        if !toApp.launched {
-            toApp.didFinishLaunching(options: options?.params)
-            toApp.launched = true
+        if !toApplet.isLaunched {
+            toApplet.didFinishLaunching(options: options?.params)
+            toApplet.isLaunched = true
         }
 
         AppletManager.printStackData()
         
-        return toApp
+        return toApplet
     }
     
     @discardableResult
@@ -111,7 +122,7 @@ public extension BsContext {
         if id == nil || id!.count == 0 {
             CATransaction.setCompletionBlock(options?.completion)
             CATransaction.begin()
-            navigationController?.popViewController(animated: animated)
+            pop(animated: animated)
             CATransaction.commit()
             return AppletManager.pop()
         }
@@ -122,8 +133,7 @@ public extension BsContext {
 
         CATransaction.setCompletionBlock(options?.completion)
         CATransaction.begin()
-        navigationController?.popToViewController(target.rootViewController,
-                                                  animated: animated)
+        pop(to: target.root, animated: animated)
         CATransaction.commit()
 
         AppletManager.printStackData()

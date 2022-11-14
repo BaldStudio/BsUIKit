@@ -1,14 +1,14 @@
 //
-//  Manifest.swift
-//  BsCoreServices
+//  AppletManifest.swift
+//  BsUIKit
 //
-//  Created by crzorz on 2022/5/19.
+//  Created by crzorz on 2022/11/14.
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
 import Foundation
 
-public struct Manifest {
+public struct AppletManifest {
     public let id: String
     public let name: String
     public let bundle: String
@@ -25,15 +25,16 @@ public struct Manifest {
     }
 }
 
-extension Manifest: CustomStringConvertible {
+extension AppletManifest: CustomStringConvertible {
     public var description: String {
         String(format: "\(bundle).\(name) - \(id) - \(version) ")
     }
 }
 
-extension Manifest {
+extension AppletManifest {
     var appletClass: Applet.Type? {
         NSClassFromString("\(bundle).\(name)") as? Applet.Type
     }
     
 }
+

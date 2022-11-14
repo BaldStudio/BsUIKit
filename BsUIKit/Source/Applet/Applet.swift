@@ -1,8 +1,8 @@
 //
 //  Applet.swift
-//  BsCoreServices
+//  BsUIKit
 //
-//  Created by crzorz on 2022/5/12.
+//  Created by crzorz on 2022/11/14.
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
@@ -17,14 +17,14 @@ open class Applet {
 
     }
     
-    var launched = false
+    var isLaunched = false
     
-    var rootViewController = AppletViewController()
+    var root = AppletViewController()
     
-    public var contentViewController: UIViewController? {
+    public var content: UIViewController? {
         willSet {
             guard let vc = newValue else {
-                if let child = contentViewController {
+                if let child = content {
                     child.willMove(toParent: nil)
                     child.removeFromParent()
                     child.view.removeFromSuperview()
@@ -32,14 +32,14 @@ open class Applet {
                 return
             }
 
-            rootViewController.applet = self
-            rootViewController.addChild(vc)
-            rootViewController.view.addSubview(vc.view)
-            vc.didMove(toParent: rootViewController)
+            root.applet = self
+            root.addChild(vc)
+            root.view.addSubview(vc.view)
+            vc.didMove(toParent: root)
         }
     }
 
-    public internal(set) var manifest: Manifest!
+    public internal(set) var manifest: AppletManifest!
     
     open var shouldTerminate: Bool {
         true
@@ -77,3 +77,4 @@ extension Applet: CustomStringConvertible, Equatable {
         lhs === rhs
     }
 }
+
