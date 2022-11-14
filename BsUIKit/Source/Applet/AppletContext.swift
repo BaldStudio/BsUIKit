@@ -23,7 +23,7 @@ public extension AppletContext {
     
     struct LaunchOptions {
         public var params: [String: Any]? = nil
-        public var animated: Bool? = true
+        public var animated: Bool = true
         public var completion: (() -> Void)? = nil
     }
     
@@ -72,10 +72,9 @@ public extension AppletContext {
             return nil
         }
 
-        var options: LaunchOptions? = nil
+        var options = LaunchOptions()
         if let closure = closure {
-            options = LaunchOptions()
-            closure(&(options!))
+            closure(&options)
         }
 
         let fromApplet = AppletManager.lastAppet
@@ -84,21 +83,20 @@ public extension AppletContext {
             toApplet.willEnterForeground()
         }
         else {
-            toApplet.willFinishLaunching(options: options?.params)
+            toApplet.willFinishLaunching(options: options.params)
         }
 
         AppletManager.push(toApplet)
 
-        let animated = options?.animated ?? true
-        CATransaction.setCompletionBlock(options?.completion)
+        CATransaction.setCompletionBlock(options.completion)
         CATransaction.begin()
-        push(toApplet.root, animated: animated)
+        push(toApplet.root, animated: options.animated)
         CATransaction.commit()
 
         fromApplet?.didEnterBackground()
 
         if !toApplet.isLaunched {
-            toApplet.didFinishLaunching(options: options?.params)
+            toApplet.didFinishLaunching(options: options.params)
             toApplet.isLaunched = true
         }
 
@@ -111,18 +109,16 @@ public extension AppletContext {
     static func exit(toApplet id: String? = nil,
                      closure: ((inout LaunchOptions) -> Void)? = nil) -> Applet? {
 
-        var options: LaunchOptions? = nil
+        var options = LaunchOptions()
         if let closure = closure {
             options = LaunchOptions()
-            closure(&(options!))
+            closure(&options)
         }
 
-        let animated = options?.animated ?? true
-
         if id == nil || id!.count == 0 {
-            CATransaction.setCompletionBlock(options?.completion)
+            CATransaction.setCompletionBlock(options.completion)
             CATransaction.begin()
-            pop(animated: animated)
+            pop(animated: options.animated)
             CATransaction.commit()
             return AppletManager.pop()
         }
@@ -131,9 +127,9 @@ public extension AppletContext {
 
         AppletManager.pop(to: target)
 
-        CATransaction.setCompletionBlock(options?.completion)
+        CATransaction.setCompletionBlock(options.completion)
         CATransaction.begin()
-        pop(to: target.root, animated: animated)
+        pop(to: target.root, animated: options.animated)
         CATransaction.commit()
 
         AppletManager.printStackData()

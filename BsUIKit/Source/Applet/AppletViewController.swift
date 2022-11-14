@@ -14,39 +14,6 @@ class AppletViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        popAppletIfNeeded()
-    }
-
-    override func didMove(toParent parent: UIViewController?) {
-        super.didMove(toParent: parent)
-        guard parent == nil else {
-            logger.debug("当前控制器被添加到\(parent!)")
-            return
-        }
-
-        guard let vc = AppletContext.navigator.topViewController else {
-            logger.debug("导航栈是空的")
-            return
-        }
-        
-        guard let toVC = vc as? AppletViewController else {
-            /*
-             前置的是普通ViewController，不是Applet根视图
-             所以栈同步需要放在这里去做掉
-            */
-            AppletManager.pop()
-            return
-        }
-        
-        guard toVC.applet != nil else {
-            logger.debug("\(self) 所属的 Applet 为 nil")
-            return
-        }
-        
-        AppletManager.pop()
-    }
-    
-    func popAppletIfNeeded() {
         
         guard let trasnCoor = transitionCoordinator else {
             logger.debug("transitionCoordinator is nil")
@@ -94,6 +61,36 @@ class AppletViewController: UIViewController {
 
             AppletManager.pop()
         }
+
     }
 
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
+        guard parent == nil else {
+            logger.debug("当前控制器被添加到\(parent!)")
+            return
+        }
+
+        guard let vc = AppletContext.navigator.topViewController else {
+            logger.debug("导航栈是空的")
+            return
+        }
+        
+        guard let toVC = vc as? AppletViewController else {
+            /*
+             前置的是普通ViewController，不是Applet根视图
+             所以栈同步需要放在这里去做掉
+            */
+            AppletManager.pop()
+            return
+        }
+        
+        guard toVC.applet != nil else {
+            logger.debug("\(self) 所属的 Applet 为 nil")
+            return
+        }
+        
+        AppletManager.pop()
+    }
+    
 }
