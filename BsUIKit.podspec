@@ -41,4 +41,9 @@ Pod::Spec.new do |s|
     ss.ios.source_files = 'BsUIKit/Source/Widgets/**/*'
   end
 
+  s.subspec 'Applet' do |ss|
+    ss.ios.source_files = 'BsUIKit/Source/Applet/**/*'
+    ss.ios.dependency 'BsUIKit/Base'
+  end
+
 end
