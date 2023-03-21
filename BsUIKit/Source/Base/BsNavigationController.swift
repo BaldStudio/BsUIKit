@@ -34,6 +34,11 @@ open class BsNavigationController: UINavigationController {
 
     }
     
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+    }
+    
     open override var shouldAutorotate: Bool {
         topViewController?.shouldAutorotate ?? super.shouldAutorotate
     }

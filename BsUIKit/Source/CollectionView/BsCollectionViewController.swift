@@ -17,9 +17,9 @@ open class BsCollectionViewController: BsViewController, UICollectionViewDelegat
                                           collectionViewLayout: layout)
 
     }
-        
+    
     open class func setupDefaultCollectionView() -> BsCollectionView {
-        BsCollectionView(frame: .zero,       
+        BsCollectionView(frame: .zero,
                          collectionViewLayout: UICollectionViewFlowLayout())
     }
     
@@ -28,7 +28,7 @@ open class BsCollectionViewController: BsViewController, UICollectionViewDelegat
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.addSubview(collectionView)
         collectionView.bs.edgesEqualToSuperview()
         collectionView.delegate = self

@@ -6,6 +6,7 @@
 //  Copyright © 2021 BaldStudio. All rights reserved.
 //
 
+import UIKit
 import BsFoundation
 
 let logger: BsLogger = {

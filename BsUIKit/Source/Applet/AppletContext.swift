@@ -14,7 +14,6 @@ public struct AppletContext {
     }
     
     public static let shared = AppletContext()
-
 }
 
 //MARK: - Applet
