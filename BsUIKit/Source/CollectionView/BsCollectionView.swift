@@ -30,6 +30,8 @@ open class BsCollectionView: UICollectionView {
     }
 
     open func commonInit() {
+        backgroundColor = .systemGroupedBackground
+        
         delegate = bs.proxy
         dataSource = bs.dataSource
         
