@@ -17,7 +17,7 @@ open class BsTableViewDataSource: NSObject {
     open var children: ContiguousArray<Child> = []
     
     // MARK: - Node Actions
-
+    
     open var count: Int {
         children.count
     }
@@ -41,7 +41,7 @@ open class BsTableViewDataSource: NSObject {
     
     open func insert(_ child: Child, at index: Int) {
         child.removeFromParent()
-
+        
         children.insert(child, at: index)
         child.parent = self
     }
@@ -52,7 +52,7 @@ open class BsTableViewDataSource: NSObject {
         children[index] = child
         child.parent = self
     }
-
+    
     open func remove(at index: Int) {
         children[index].parent = nil
         children.remove(at: index)
@@ -63,19 +63,19 @@ open class BsTableViewDataSource: NSObject {
             remove(at: index)
         }
     }
-
+    
     open func remove(children: [Child]) {
         for child in children {
             remove(child)
         }
     }
-
+    
     open func removeAll() {
         for i in 0..<children.count {
             remove(at: i)
         }
     }
-        
+    
     open func child(at index: Int) -> Child {
         children[index]
     }
@@ -104,7 +104,7 @@ open class BsTableViewDataSource: NSObject {
             self[indexPath.section][indexPath.row]
         }
     }
-
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -115,12 +115,22 @@ extension BsTableViewDataSource: UITableViewDataSource {
         count
     }
     
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView,
+                        numberOfRowsInSection section: Int) -> Int {
         self[section].count
     }
-
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self[indexPath].tableView(self.tableView, cellForRowAt: indexPath)
+    
+    open func tableView(_ tableView: UITableView,
+                        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        self[indexPath].tableView(self.tableView, cellForRowAt: indexPath)
+    }
+    
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        self[section].headerTitle
+    }
+    
+    open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        self[section].footerTitle
     }
     
 }
@@ -136,5 +146,5 @@ public extension BsTableViewDataSource {
     static func -= (left: BsTableViewDataSource, right: Child) {
         left.remove(right)
     }
-
+    
 }

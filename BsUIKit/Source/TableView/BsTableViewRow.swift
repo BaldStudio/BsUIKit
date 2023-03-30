@@ -7,84 +7,57 @@
 //
 
 import UIKit
+import BsFoundation
 
-open class BsTableViewRow {
+// MARK: - Property
 
-    public typealias Parent = BsTableViewSection
-
-    open internal(set) weak var parent: Parent? = nil
-
-    open var nib: UINib? = nil
-
-    open var cellClass: UITableViewCell.Type = UITableViewCell.self
-        
-    open var cellHeight: CGFloat = 44.0
-    
-    public init() {}
-
-    open var reuseIdentifier: String {
-        "\(Self.self).\(cellClass).Cell"
-    }
-
-    open var tableView: BsTableView? {
-        parent?.tableView
-    }
-
-    open var cell: UITableViewCell? {
-        guard let indexPath = indexPath,
-              let tableView = tableView else {
-            return nil
-        }
-        
-        return tableView.cellForRow(at: indexPath)
-    }
-
-    open var indexPath: IndexPath? {
-        guard let parent = parent,
-            let section = parent.index,
-            let row = parent.children.firstIndex(of: self) else {
-            return nil
-        }
-        
-        return IndexPath(row: row, section: section)
+open class BsTableViewRow<T: UITableViewCell>: BsTableViewNode {
+    override var cellClass: UITableViewCell.Type {
+        T.self
     }
     
-    open func reload(with animation: UITableView.RowAnimation = .none) {
-        guard let tableView = tableView, let indexPath = indexPath else { return }
-        tableView.reloadRows(at: [indexPath], with: animation)
-    }
-        
-    // MARK: - Additions
-
-    open func removeFromParent() {
-        parent?.remove(self)
-    }
-
-    // MARK: -  Cell
-
-    open func tableView(_ tableView: BsTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.registerCellIfNeeded(self)
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
-                                                 for: indexPath)
+    override func prepareLayoutSizeFitting(_ cell: UITableViewCell, at indexPath: IndexPath) {
+        guard let cell = cell as? T else { return }
         update(cell, at: indexPath)
+    }
+    
+    override func tableView(_ tableView: BsTableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let cell = cell as? T {
+            update(cell, at: indexPath)
+        }
         return cell
     }
     
-    open func update(_ cell: UITableViewCell, at indexPath: IndexPath) {}
-
-    open func willDisplay(_ cell: UITableViewCell, at indexPath: IndexPath) {}
+    open func update(_ cell: T, at indexPath: IndexPath) {}
     
-    open func didEndDisplaying(_ cell: UITableViewCell, at indexPath: IndexPath) {}
-    
-    open func didSelectRow(at indexPath: IndexPath) {}
-
-}
-
-extension BsTableViewRow: Equatable {
-    
-    public static func == (lhs: BsTableViewRow, rhs: BsTableViewRow) -> Bool {
-        ObjectIdentifier(lhs).hashValue == ObjectIdentifier(rhs).hashValue
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? T else { return }
+        willDisplay(cell, at: indexPath)
     }
     
+    open func willDisplay(_ cell: T, at indexPath: IndexPath) {}
+    
+    override func tableView(_ tableView: UITableView,
+                            didEndDisplaying cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? T else { return }
+        didEndDisplaying(cell, at: indexPath)
+    }
+    
+    open func didEndDisplaying(_ cell: T, at indexPath: IndexPath) {}
 }
 
+// MARK: - Mutable Cell Class
+
+open class BsTableViewMutableRow: BsTableViewRow<UITableViewCell> {    
+    private var _cellClass: UITableViewCell.Type = UITableViewCell.self
+    
+    open override var cellClass: UITableViewCell.Type {
+        set { _cellClass = newValue }
+        get { _cellClass }
+    }
+}

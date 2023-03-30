@@ -9,140 +9,146 @@
 import UIKit
 
 final class BsCollectionViewProxy: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    private var impl: BsCollectionViewProxyImpl?
     
     weak var dataSource: BsCollectionViewDataSource!
     weak var collectionView: BsCollectionView!
     
     weak var target: UICollectionViewDelegate?
-
-    convenience init(_ target: UICollectionViewDelegate?) {
-        self.init()
-        self.target = target
+    
+    override init() {
+        super.init()
+        impl = BsCollectionViewProxyImpl(self)
     }
-        
+    
     override func forwardingTarget(for aSelector: Selector!) -> Any? {
-        target?.responds(to: aSelector) == true ? target : super.forwardingTarget(for: aSelector)
+        target?.responds(to: aSelector) == true ? target : impl ?? super.forwardingTarget(for: aSelector)
     }
-        
+    
     override func responds(to aSelector: Selector!) -> Bool {
-        target?.responds(to: aSelector) == true || super.responds(to: aSelector)
+        target?.responds(to: aSelector) == true || impl?.responds(to: aSelector) == true || super.responds(to: aSelector)
     }
-
 }
+
+private class BsCollectionViewProxyImpl: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    weak var proxy: BsCollectionViewProxy!
+    convenience init(_ proxy: BsCollectionViewProxy) {
+        self.init()
+        self.proxy = proxy
+    }
+}
+
 
 // MARK: - Cell
 
-extension BsCollectionViewProxy {
+extension BsCollectionViewProxyImpl {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard target?.collectionView?(collectionView, didSelectItemAt: indexPath) == nil
-        else { return }
-
-        dataSource[indexPath].didSelectItem(at: indexPath)
+        proxy.dataSource[indexPath].collectionView(collectionView, didSelectItemAt: indexPath)
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        dataSource[indexPath].didHighlightItem(at: indexPath)
+        proxy.dataSource[indexPath].collectionView(collectionView, didHighlightItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        dataSource[indexPath].didUnhighlightItem(at: indexPath)
+        proxy.dataSource[indexPath].collectionView(collectionView, didUnhighlightItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        dataSource[indexPath].willDisplay(cell, at: indexPath)
+        proxy.dataSource[indexPath].collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        dataSource[indexPath].didEndDisplaying(cell, at: indexPath)
+    func collectionView(_ collectionView: UICollectionView,
+                        didEndDisplaying cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        proxy.dataSource[indexPath].collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
     }
 
 }
 
 // MARK: - Supplementary View
 
-extension BsCollectionViewProxy {
+extension BsCollectionViewProxyImpl {
     
     func collectionView(_ collectionView: UICollectionView,
                         willDisplaySupplementaryView view: UICollectionReusableView,
                         forElementKind elementKind: String,
                         at indexPath: IndexPath) {
-        
+        let element = proxy.dataSource[indexPath.section]
         if elementKind == UICollectionView.elementKindSectionHeader {
-            dataSource[indexPath.section].willDisplay(header: view, at: indexPath)
-        }
-        else if elementKind == UICollectionView.elementKindSectionFooter {
-            dataSource[indexPath.section].willDisplay(footer: view, at: indexPath)
-        }
-        else {
-            dataSource[indexPath.section].collectionView(self.collectionView,
-                                                         willDisplaySupplementaryView: view,
-                                                         forElementKind: elementKind,
-                                                         at: indexPath)
+            element.willDisplay(header: view, at: indexPath)
+        } else if elementKind == UICollectionView.elementKindSectionFooter {
+            element.willDisplay(footer: view, at: indexPath)
+        } else {
+            element.collectionView(proxy.collectionView,
+                                   willDisplaySupplementaryView: view,
+                                   forElementKind: elementKind,
+                                   at: indexPath)
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         didEndDisplayingSupplementaryView view: UICollectionReusableView,
                         forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        
+        let element = proxy.dataSource[indexPath.section]
         if elementKind == UICollectionView.elementKindSectionHeader {
-            dataSource[indexPath.section].didEndDisplaying(header: view, at: indexPath)
+            element.didEndDisplaying(header: view, at: indexPath)
+        } else if elementKind == UICollectionView.elementKindSectionFooter {
+            element.didEndDisplaying(footer: view, at: indexPath)
+        } else {
+            element.collectionView(proxy.collectionView,
+                                   didEndDisplayingSupplementaryView: view,
+                                   forElementOfKind: elementKind,
+                                   at: indexPath)
         }
-        else if elementKind == UICollectionView.elementKindSectionFooter {
-            dataSource[indexPath.section].didEndDisplaying(footer: view, at: indexPath)
-        }
-        else {
-            dataSource[indexPath.section].collectionView(self.collectionView,
-                                                         didEndDisplayingSupplementaryView: view,
-                                                         forElementOfKind: elementKind,
-                                                         at: indexPath)
-        }
-        
     }
-
+    
 }
 
 // MARK: - Flow Layout
 
-extension BsCollectionViewProxy {
+extension BsCollectionViewProxyImpl {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        dataSource[indexPath].cellSize
+        let item = proxy.dataSource[indexPath]
+        var size = item.collectionView(collectionView, preferredFixedAxisSizeAt: indexPath)
+        size = item.collectionView(collectionView, preferredLayoutSizeFittingAt: indexPath)
+        return size
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        dataSource[section].insets
+        proxy.dataSource[section].insets
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        dataSource[section].minimumLineSpacing
+        proxy.dataSource[section].minimumLineSpacing
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        dataSource[section].minimumInteritemSpacing
+        proxy.dataSource[section].minimumInteritemSpacing
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        dataSource[section].headerSize
+        proxy.dataSource[section].headerSize
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
-        dataSource[section].footerSize
+        proxy.dataSource[section].footerSize
     }
-
+    
 }

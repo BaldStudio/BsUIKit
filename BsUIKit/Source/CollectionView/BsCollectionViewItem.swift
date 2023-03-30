@@ -7,88 +7,60 @@
 //
 
 import UIKit
+import BsFoundation
 
-open class BsCollectionViewItem {
+// MARK: - Property
+
+open class BsCollectionViewItem<T: UICollectionViewCell>: BsCollectionViewNode {
     
-    public typealias Parent = BsCollectionViewSection
-
-    open internal(set) weak var parent: Parent? = nil
-
-    open var nib: UINib? = nil
-
-    open var cellClass: UICollectionViewCell.Type = UICollectionViewCell.self
-
-    open var cellSize: CGSize = .zero
-
-    open var reuseIdentifier: String {
-        "\(Self.self).\(cellClass).Cell"
-    }
-        
-    public init() {}
-
-    open var collectionView: BsCollectionView? {
-        parent?.collectionView
-    }
-
-    open var cell: UICollectionViewCell? {
-        guard let collectionView = collectionView,
-              let indexPath = indexPath else {
-            return nil
-        }
-        
-        return collectionView.cellForItem(at: indexPath)
-    }
-
-    open var indexPath: IndexPath? {
-        guard let parent = parent,
-            let section = parent.index,
-            let item = parent.children.firstIndex(of: self) else {
-            return nil
-        }
-        
-        return IndexPath(row: item, section: section)
-    }
-    
-    open func reload() {
-        guard let collectionView = collectionView,
-              let indexPath = indexPath else { return }
-        collectionView.reloadItems(at: [indexPath])
-    }
-    
-    // MARK: - Additions
-
-    open func removeFromParent() {
-        parent?.remove(self)
+    override var cellClass: UICollectionViewCell.Type {
+        T.self
     }
     
     // MARK: - Cell
-    
-    open func collectionView(_ collectionView: BsCollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.registerCellIfNeeded(self)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                      for: indexPath)
+    override func prepareLayoutSizeFitting(_ cell: UICollectionViewCell, at indexPath: IndexPath) {
+        guard let cell = cell as? T else { return }
         update(cell, at: indexPath)
+    }
+    
+    override func collectionView(_ collectionView: BsCollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+        if let cell = cell as? T {
+            update(cell, at: indexPath)
+        }
         return cell
     }
     
-    open func update(_ cell: UICollectionViewCell, at indexPath: IndexPath) {}
-
-    open func willDisplay(_ cell: UICollectionViewCell, at indexPath: IndexPath) {}
+    open func update(_ cell: T, at indexPath: IndexPath) {}
     
-    open func didEndDisplaying(_ cell: UICollectionViewCell, at indexPath: IndexPath) {}
-    
-    open func didSelectItem(at indexPath: IndexPath) {}
-    
-    open func didHighlightItem(at indexPath: IndexPath) {}
-    
-    open func didUnhighlightItem(at indexPath: IndexPath) {}
-
-}
-
-extension BsCollectionViewItem: Equatable {
-    
-    public static func == (lhs: BsCollectionViewItem, rhs: BsCollectionViewItem) -> Bool {
-        ObjectIdentifier(lhs).hashValue == ObjectIdentifier(rhs).hashValue
+    override func collectionView(_ collectionView: UICollectionView,
+                                 willDisplay cell: UICollectionViewCell,
+                                 forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? T else { return }
+        willDisplay(cell, at: indexPath)
     }
     
+    open func willDisplay(_ cell: T, at indexPath: IndexPath) {}
+    
+    override func collectionView(_ collectionView: UICollectionView,
+                                 didEndDisplaying cell: UICollectionViewCell,
+                                 forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? T else { return }
+        didEndDisplaying(cell, at: indexPath)
+    }
+    
+    open func didEndDisplaying(_ cell: T, at indexPath: IndexPath) {}
+}
+
+// MARK: - Mutable Cell Class
+
+open class BsCollectionViewMutableItem: BsCollectionViewItem<UICollectionViewCell> {
+    
+    private var _cellClass: UICollectionViewCell.Type = UICollectionViewCell.self
+    
+    open override var cellClass: UICollectionViewCell.Type {
+        set { _cellClass = newValue }
+        get { _cellClass }
+    }
 }

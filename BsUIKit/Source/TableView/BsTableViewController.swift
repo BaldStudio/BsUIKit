@@ -20,12 +20,11 @@ open class BsTableViewController: BsViewController, UITableViewDelegate {
         BsTableView(frame: .zero, style: .insetGrouped)
     }
     
-    @Lazy(body: setupDefaultTableView)
+    @NullResetable(body: setupDefaultTableView)
     open var tableView: BsTableView!
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(tableView)
         tableView.bs.edgesEqualToSuperview()
         tableView.delegate = self

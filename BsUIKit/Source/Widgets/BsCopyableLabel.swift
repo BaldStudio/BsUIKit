@@ -13,6 +13,8 @@ open class BsCopyableLabel: UILabel {
     
     open var longPressGesture: UILongPressGestureRecognizer!
     
+    open var copyItemTitle = "复制"
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -59,7 +61,7 @@ extension BsCopyableLabel {
 
         becomeFirstResponder()
         
-        let copy = UIMenuItem(title: "复制", action: #selector(onCopy(_:)))
+        let copy = UIMenuItem(title: copyItemTitle, action: #selector(onCopy(_:)))
         UIMenuController.shared.menuItems = [copy]
         UIMenuController.shared.showMenu(from: self, rect: self.bounds)
     }

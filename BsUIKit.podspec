@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.frameworks = 'UIKit'
   
   s.ios.dependency 'BsFoundation'
-  
+
   s.subspec 'Base' do |ss|
     ss.ios.source_files = 'BsUIKit/Source/Base/**/*'
   end

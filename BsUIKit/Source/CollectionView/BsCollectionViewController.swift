@@ -23,12 +23,11 @@ open class BsCollectionViewController: BsViewController, UICollectionViewDelegat
                          collectionViewLayout: UICollectionViewFlowLayout())
     }
     
-    @Lazy(body: setupDefaultCollectionView)
+    @NullResetable(body: setupDefaultCollectionView)
     open var collectionView: BsCollectionView!
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-
         view.addSubview(collectionView)
         collectionView.bs.edgesEqualToSuperview()
         collectionView.delegate = self

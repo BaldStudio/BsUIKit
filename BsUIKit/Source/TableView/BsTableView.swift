@@ -30,10 +30,9 @@ open class BsTableView: UITableView {
     }
 
     open func commonInit() {
-        
+        backgroundColor = .systemGroupedBackground
         delegate = bs.proxy
         dataSource = bs.dataSource
-        
         bs.proxy.tableView = self
     }
        
@@ -104,6 +103,9 @@ open class BsTableView: UITableView {
         bs.dataSource.remove(section)
     }
 
+    open func insert(_ section: BsTableViewSection, at index: Int) {
+        bs.dataSource.insert(section, at: index)
+    }
 }
 
 // MARK: - Extends
@@ -121,7 +123,7 @@ public extension BsTableView {
 
 extension BsTableView {
     
-    final func registerCellIfNeeded(_ row: BsTableViewRow) {
+    final func registerCellIfNeeded(_ row: BsTableViewNode) {
         
         let id = row.reuseIdentifier
         if registryMap.contains(where: { $0.key == id }) {

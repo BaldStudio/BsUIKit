@@ -31,10 +31,8 @@ open class BsCollectionView: UICollectionView {
 
     open func commonInit() {
         backgroundColor = .systemGroupedBackground
-        
         delegate = bs.proxy
         dataSource = bs.dataSource
-        
         bs.proxy.collectionView = self
     }
     
@@ -127,7 +125,7 @@ public extension BsCollectionView {
 
 extension BsCollectionView {
     
-    final func registerCellIfNeeded(_ item: BsCollectionViewItem) {
+    final func registerCellIfNeeded(_ item: BsCollectionViewNode) {
         
         let id = item.reuseIdentifier
         if registryMap.contains(where: { $0.key == id }) {

@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import BsFoundation
 
-open class BsCollectionViewSection {
+open class BsCollectionViewSection: NSObject {
     
     public typealias Parent = BsCollectionViewDataSource
-    public typealias Child = BsCollectionViewItem
+    public typealias Child = BsCollectionViewNode
 
     open weak internal(set) var parent: Parent? = nil
     
@@ -20,8 +21,6 @@ open class BsCollectionViewSection {
     open var insets: UIEdgeInsets = .zero
     open var minimumLineSpacing: CGFloat = 0
     open var minimumInteritemSpacing: CGFloat = 0
-
-    public init() {}
 
     open var collectionView: BsCollectionView? {
         parent?.collectionView
@@ -215,14 +214,6 @@ open class BsCollectionViewSection {
     open func collectionView(_ collectionView: BsCollectionView,
                              didEndDisplayingSupplementaryView view: UICollectionReusableView,
                              forElementOfKind elementKind: String, at indexPath: IndexPath) {}
-}
-
-extension BsCollectionViewSection: Equatable {
-    
-    public static func == (lhs: BsCollectionViewSection, rhs: BsCollectionViewSection) -> Bool {
-        ObjectIdentifier(lhs).hashValue == ObjectIdentifier(rhs).hashValue
-    }
-    
 }
 
 public extension BsCollectionViewSection {

@@ -16,7 +16,7 @@ open class BsWebViewController: BsViewController, WKUIDelegate, WKNavigationDele
         WKWebView(frame: .zero)
     }
     
-    @Lazy(body: setupDefaultWebView)
+    @NullResetable(body: setupDefaultWebView)
     open var webView: WKWebView!
         
     open override func viewDidLoad() {
