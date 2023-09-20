@@ -36,6 +36,10 @@
 		D23FF0D525AD9B5500D755D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D23FF0D325AD9B5500D755D9 /* LaunchScreen.storyboard */; };
 		D23FF0E325AD9C5600D755D9 /* BsUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23FF0E225AD9C5600D755D9 /* BsUIKitTests.swift */; };
 		D23FF0E525AD9C5600D755D9 /* BsUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27A8A1D25203F1A006A6125 /* BsUIKit.framework */; platformFilter = ios; };
+		D27AD2BA2ABAB826008FCEFC /* BsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27AD2B92ABAB826008FCEFC /* BsView.swift */; };
+		D27AD2BD2ABAB87A008FCEFC /* BsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27AD2BB2ABAB879008FCEFC /* BsCollectionViewCell.swift */; };
+		D27AD2BE2ABAB87A008FCEFC /* BsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27AD2BC2ABAB87A008FCEFC /* BsTableViewCell.swift */; };
+		D27AD2C52ABAB8AB008FCEFC /* BsDivideLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27AD2C42ABAB8AB008FCEFC /* BsDivideLine.swift */; };
 		D27DE084292244340018A868 /* AppletManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE07F292244340018A868 /* AppletManifest.swift */; };
 		D27DE085292244340018A868 /* AppletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE080292244340018A868 /* AppletManager.swift */; };
 		D27DE086292244340018A868 /* AppletContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27DE081292244340018A868 /* AppletContext.swift */; };
@@ -122,6 +126,10 @@
 		D23FF0E225AD9C5600D755D9 /* BsUIKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BsUIKitTests.swift; sourceTree = "<group>"; };
 		D23FF0E425AD9C5600D755D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D27A8A1D25203F1A006A6125 /* BsUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BsUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27AD2B92ABAB826008FCEFC /* BsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BsView.swift; sourceTree = "<group>"; };
+		D27AD2BB2ABAB879008FCEFC /* BsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BsCollectionViewCell.swift; sourceTree = "<group>"; };
+		D27AD2BC2ABAB87A008FCEFC /* BsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BsTableViewCell.swift; sourceTree = "<group>"; };
+		D27AD2C42ABAB8AB008FCEFC /* BsDivideLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BsDivideLine.swift; sourceTree = "<group>"; };
 		D27DE07F292244340018A868 /* AppletManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletManifest.swift; sourceTree = "<group>"; };
 		D27DE080292244340018A868 /* AppletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletManager.swift; sourceTree = "<group>"; };
 		D27DE081292244340018A868 /* AppletContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppletContext.swift; sourceTree = "<group>"; };
@@ -209,9 +217,12 @@
 		D20A133F28B9BC8B0024ACCB /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				D27AD2BF2ABAB883008FCEFC /* Views */,
 				D20F0A6128B5C83B00BD6E4C /* BsViewController.swift */,
 				D20F0A6528B5C88700BD6E4C /* BsTabBarController.swift */,
 				D20F0A6728B5C89200BD6E4C /* BsNavigationController.swift */,
+				D20F0A6928B5C8F600BD6E4C /* BsTableViewController.swift */,
+				D20F0A6B28B5C90000BD6E4C /* BsCollectionViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -220,7 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				D2F7C2F52A9745BF00F2EAD4 /* Core */,
-				D20F0A6928B5C8F600BD6E4C /* BsTableViewController.swift */,
 				D20F0A7A28B5CCEB00BD6E4C /* BsTableView.swift */,
 				D20F0A7C28B5CCEB00BD6E4C /* BsTableViewDataSource.swift */,
 				D20F0A7B28B5CCEB00BD6E4C /* BsTableViewSection.swift */,
@@ -233,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				D2F7C2F62A9745C600F2EAD4 /* Core */,
-				D20F0A6B28B5C90000BD6E4C /* BsCollectionViewController.swift */,
 				D20F0A6F28B5CCD800BD6E4C /* BsCollectionView.swift */,
 				D20F0A7128B5CCD800BD6E4C /* BsCollectionViewDataSource.swift */,
 				D20F0A7328B5CCD800BD6E4C /* BsCollectionViewSection.swift */,
@@ -328,6 +337,16 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		D27AD2BF2ABAB883008FCEFC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D27AD2B92ABAB826008FCEFC /* BsView.swift */,
+				D27AD2BC2ABAB87A008FCEFC /* BsTableViewCell.swift */,
+				D27AD2BB2ABAB879008FCEFC /* BsCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		D27DE06E292243D50018A868 /* Applet */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				D2A3334127D0C91F00705185 /* HapticEngine.swift */,
+				D27AD2C42ABAB8AB008FCEFC /* BsDivideLine.swift */,
 				D2A3333727D09C0E00705185 /* BsGradientView.swift */,
 				D2A3333F27D0BCBF00705185 /* BsBoxLabel.swift */,
 				D214742E2841551E00B809EF /* BsCopyableLabel.swift */,
@@ -664,12 +684,14 @@
 				D20F0A8228B5CCEB00BD6E4C /* BsTableViewProxy.swift in Sources */,
 				D2CE89922A92FCDC0073634E /* BsLoaderButton.swift in Sources */,
 				D20F0A7E28B5CCEB00BD6E4C /* BsTableViewRow.swift in Sources */,
+				D27AD2BE2ABAB87A008FCEFC /* BsTableViewCell.swift in Sources */,
 				D2D70DBB2A53C9090042C251 /* ActionSheetContext.swift in Sources */,
 				D2137E9029CD977F0031221C /* BsUIKit.swift in Sources */,
 				D20F0A7728B5CCD800BD6E4C /* BsCollectionViewProxy.swift in Sources */,
 				D27DE085292244340018A868 /* AppletManager.swift in Sources */,
 				D214742F2841551E00B809EF /* BsCopyableLabel.swift in Sources */,
 				D285850A2A8372E000604748 /* BsIconFont.swift in Sources */,
+				D27AD2C52ABAB8AB008FCEFC /* BsDivideLine.swift in Sources */,
 				D2CE898E2A92F9410073634E /* BsTableViewNode.swift in Sources */,
 				D20F0A6828B5C89200BD6E4C /* BsNavigationController.swift in Sources */,
 				D20F0A6C28B5C90000BD6E4C /* BsCollectionViewController.swift in Sources */,
@@ -678,8 +700,10 @@
 				D2A3334027D0BCBF00705185 /* BsBoxLabel.swift in Sources */,
 				D285850E2A8372E000604748 /* UIBarButtonItem+.swift in Sources */,
 				D20F0A6228B5C83B00BD6E4C /* BsViewController.swift in Sources */,
+				D27AD2BD2ABAB87A008FCEFC /* BsCollectionViewCell.swift in Sources */,
 				D27DE088292244340018A868 /* AppletViewController.swift in Sources */,
 				D20F0A7828B5CCD800BD6E4C /* BsCollectionViewSection.swift in Sources */,
+				D27AD2BA2ABAB826008FCEFC /* BsView.swift in Sources */,
 				D20F0A6628B5C88700BD6E4C /* BsTabBarController.swift in Sources */,
 				D285850F2A8372E000604748 /* UIImageView+.swift in Sources */,
 				D20F0A6428B5C86B00BD6E4C /* BsWebViewController.swift in Sources */,

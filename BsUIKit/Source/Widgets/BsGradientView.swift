@@ -51,7 +51,6 @@ open class BsGradientView: UIView {
 
     open override func layoutSubviews() {
         super.layoutSubviews()
-        
         effectLayer.frame = bounds
         effectLayer.startPoint = startPoint
         effectLayer.endPoint = endPoint

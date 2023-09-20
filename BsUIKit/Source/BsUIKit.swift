@@ -44,3 +44,8 @@ public enum FixedAxisSize {
     case vertical   /// 垂直方向撑满与父视图
     case horizontal /// 水平方向撑满父视图
 }
+
+public struct Design {
+    /// 分割线高度
+    public static let line = 1.0 / Screen.scale
+}

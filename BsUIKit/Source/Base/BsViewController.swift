@@ -29,9 +29,12 @@ open class BsViewController: UIViewController {
 
     }
     
+    open override func loadView() {
+        view = BsView()
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
     }
     
     open override var shouldAutorotate: Bool {

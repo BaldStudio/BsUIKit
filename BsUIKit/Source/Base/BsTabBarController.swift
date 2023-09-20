@@ -6,9 +6,6 @@
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
-import UIKit
-import BsFoundation
-
 // MARK: - BsTabBarControllerDelegate
 
 public protocol BsTabBarControllerDelegate: AnyObject {

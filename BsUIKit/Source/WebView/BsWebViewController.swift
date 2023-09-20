@@ -6,9 +6,7 @@
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
-import UIKit
 import WebKit
-import BsFoundation
 
 open class BsWebViewController: BsViewController, WKUIDelegate, WKNavigationDelegate {
     

@@ -6,8 +6,6 @@
 //  Copyright © 2022 BaldStudio. All rights reserved.
 //
 
-import UIKit
-
 open class BsNavigationController: UINavigationController {
             
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
