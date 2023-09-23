@@ -117,15 +117,21 @@ extension BsTableViewNode {
     /// 自适应尺寸计算
     func tableView(_ tableView: UITableView, preferredLayoutSizeFittingAt indexPath: IndexPath) -> CGFloat {
         if preferredLayoutSizeFitting == .none { return cellHeight }
-        guard EPSILON > abs(layoutSizeFittingCache - UIView.noIntrinsicMetric) else { return layoutSizeFittingCache }
-        let cell = cellClass.init(frame: tableView.bounds)
-        prepareLayoutSizeFitting(cell, at: indexPath)
-        // contentView本身和cell没有约束关系，如果需要使用 systemLayoutSizeFitting 计算高度，则需要添加约束关系
-        // 另外此处的cell是临时创建的，在计算完毕之后会自动销毁，所以可以不用移除添加的约束
-        cell.contentView.bs.edgesEqualToSuperview()
-        let layoutSize = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
-        layoutSizeFittingCache = max(cellHeight, layoutSize.height)
-        return layoutSizeFittingCache
+        return UITableView.automaticDimension
+
+// TODO: 以下计算可以使用，但还需要完善
+//        if preferredLayoutSizeFitting == .none { return cellHeight }
+//        guard EPSILON > abs(layoutSizeFittingCache - UIView.noIntrinsicMetric) else { return layoutSizeFittingCache }
+//        let cell = cellClass.init(style: .default, reuseIdentifier: reuseIdentifier)
+//        prepareLayoutSizeFitting(cell, at: indexPath)
+//
+//        let widthConstraint = cell.contentView.widthAnchor.constraint(equalToConstant: cell.bounds.width)
+//        widthConstraint.priority = .required - 1 // 避免约束冲突
+//        widthConstraint.isActive = true
+//
+//        let layoutSize = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+//        layoutSizeFittingCache = max(cellHeight, layoutSize.height)
+//        return layoutSizeFittingCache
     }
 
 }

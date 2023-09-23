@@ -162,23 +162,23 @@ extension BsPresentationController: UIViewControllerTransitioningDelegate {
 
 // MARK: - Extensions
 
-private struct AssociateKey {
+private struct RuntimeKey {
     static var presentation = 0
 }
 
 extension UIViewController {
     var bsModalTransition: BsPresentationController? {
         get {
-            var p: BsPresentationController? = value(forAssociated: &AssociateKey.presentation)
+            var p: BsPresentationController? = value(forAssociated: &RuntimeKey.presentation)
             if p.isNil {
                 p = BsPresentationController(presentedViewController: self,
                                              presenting: nil)
-                set(associate: p, for: &AssociateKey.presentation)
+                set(associate: p, for: &RuntimeKey.presentation)
             }
             return p
         }
         set {
-            set(associate: newValue, for: &AssociateKey.presentation)
+            set(associate: newValue, for: &RuntimeKey.presentation)
         }
     }
 }

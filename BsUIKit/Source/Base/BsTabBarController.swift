@@ -270,17 +270,17 @@ private extension BsTabBarController {
 
 // MARK: - Extensions
 
-private struct AssociateKey {
+private struct RuntimeKey {
     static var tabBarController = 0
 }
 
 public extension SwiftX where T: UIViewController {
     var tabBarController: BsTabBarController? {
         get {
-            this.value<BsTabBarController>(forAssociated: &AssociateKey.tabBarController)
+            this.value<BsTabBarController>(forAssociated: &RuntimeKey.tabBarController)
         }
         set {
-            this.set(associate: newValue, for: &AssociateKey.tabBarController)
+            this.set(associate: newValue, for: &RuntimeKey.tabBarController)
         }
     }
 }

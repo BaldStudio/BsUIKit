@@ -16,11 +16,11 @@ open class BsTableViewController: BsViewController, UITableViewDelegate {
         tableView = BsTableView(frame: .zero, style: style)
     }
     
-    open class func setupDefaultTableView() -> BsTableView {
+    open class func setupTableView() -> BsTableView {
         BsTableView(frame: .zero, style: .insetGrouped)
     }
     
-    @NullResetable(body: setupDefaultTableView)
+    @NullResetable(body: setupTableView)
     open var tableView: BsTableView!
     
     open override func viewDidLoad() {

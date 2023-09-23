@@ -18,12 +18,12 @@ open class BsCollectionViewController: BsViewController, UICollectionViewDelegat
 
     }
     
-    open class func setupDefaultCollectionView() -> BsCollectionView {
+    open class func setupCollectionView() -> BsCollectionView {
         BsCollectionView(frame: .zero,
                          collectionViewLayout: UICollectionViewFlowLayout())
     }
     
-    @NullResetable(body: setupDefaultCollectionView)
+    @NullResetable(body: setupCollectionView)
     open var collectionView: BsCollectionView!
     
     open override func viewDidLoad() {
