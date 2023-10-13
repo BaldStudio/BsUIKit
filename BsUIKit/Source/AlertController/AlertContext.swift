@@ -17,8 +17,8 @@ final class AlertContext {
         controller.collectionView.layer.masksToBounds = true
         controller.collectionView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         controller.collectionView.append(section: primarySection)
-        controller.bsModalTransition = PresentationController(presentedViewController: controller,
-                                                               presenting: nil)
+        controller.bsModalTransition = BsAlertPresentationController(presentedViewController: controller,
+                                                                     presenting: nil)
     }
     
     func append(_ action: BsAlertAction) {
@@ -68,68 +68,6 @@ final class AlertContext {
         controller.collectionView.reloadData()
     }
     
-}
-
-// MARK: - PresentationController
-
-private extension AlertContext {
-    class PresentationController: BsPresentationController, UIViewControllerAnimatedTransitioning {
-        override init(presentedViewController: UIViewController,
-                      presenting presentingViewController: UIViewController?) {
-            super.init(presentedViewController: presentedViewController,
-                       presenting: presentingViewController)
-            presentedViewController.modalTransitionStyle = .crossDissolve
-        }
-        
-        override var frameOfPresentedViewInContainerView: CGRect {
-            guard let containerView = containerView else {
-                return .zero
-            }
-            let bounds = containerView.bounds;
-            let contentSize = size(forChildContentContainer: presentedViewController,
-                                   withParentContainerSize:bounds.size)
-            var frame: CGRect = .zero
-            frame.size.width = AlertUtils.alertWidth
-            frame.size.height = contentSize.height
-            frame.origin.x = (bounds.width - frame.width) * 0.5
-            frame.origin.y = (bounds.height - contentSize.height - containerView.safeAreaInsets.vertical) * 0.5
-            return frame
-        }
-        
-        func animationController(forPresented presented: UIViewController,
-                                 presenting: UIViewController,
-                                 source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            self
-        }
-        
-        func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-            0.4
-        }
-        
-        func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-            guard let toView = transitionContext.view(forKey: .to) else { return }
-            
-            let container = transitionContext.containerView
-            container.addSubview(toView)
-            
-            let duration = transitionDuration(using: transitionContext)
-            
-            toView.alpha = 0
-            toView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            
-            UIView.animate(withDuration: duration,
-                           delay: 0,
-                           usingSpringWithDamping: 0.8,
-                           initialSpringVelocity: 1,
-                           options: .curveEaseOut,
-                           animations: {
-                toView.alpha = 1
-                toView.transform = .identity
-            }, completion: { _ in
-                transitionContext.completeTransition(true)
-            })
-        }
-    }
 }
 
 // MARK: - Base
@@ -231,7 +169,7 @@ private final class TitleCell: AlertBaseCell {
         stackView.distribution = .fill
         stackView.alignment = .fill
         contentView.addSubview(stackView)
-        stackView.bs.edgesEqualToSuperview(with: UIEdgeInsets(all: AlertUtils.titleMargin))
+        stackView.bs.edgesEqualToSuperview(with: .all(AlertUtils.titleMargin))
     }
 }
 

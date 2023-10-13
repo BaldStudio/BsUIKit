@@ -39,16 +39,16 @@ open class BsCollectionViewSection: NSObject {
     }
     
     open var isEmpty: Bool {
-        children.count < 1
+        children.isEmpty
     }
-    
+
     open var index: Int? {
         parent?.children.firstIndex(of: self)
     }
     
     open func append(_ child: Child) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-        
         children.append(child)
         child.parent = self
     }
@@ -60,19 +60,22 @@ open class BsCollectionViewSection: NSObject {
     }
     
     open func insert(_ child: Child, at index: Int) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-
         children.insert(child, at: index)
         child.parent = self
     }
     
     open func replace(childAt index: Int, with child: Child) {
-        child.removeFromParent()
-        
-        children[index] = child
-        child.parent = self
+        if children.contains(child), let otherIndex = children.firstIndex(of: child) {
+            children.swapAt(index, otherIndex)
+        } else {
+            child.removeFromParent()
+            children[index] = child
+            child.parent = self
+        }
     }
-
+    
     open func remove(at index: Int) {
         children[index].parent = nil
         children.remove(at: index)
@@ -83,7 +86,7 @@ open class BsCollectionViewSection: NSObject {
             remove(at: index)
         }
     }
-
+    
     open func remove(children: [Child]) {
         for child in children {
             remove(child)
@@ -91,8 +94,8 @@ open class BsCollectionViewSection: NSObject {
     }
     
     open func removeAll() {
-        for i in 0..<children.count {
-            remove(at: i)
+        for child in children.reversed() {
+            remove(child)
         }
     }
     

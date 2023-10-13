@@ -23,12 +23,12 @@ open class BsCollectionViewDataSource: NSObject {
     }
     
     open var isEmpty: Bool {
-        children.count < 1
+        children.isEmpty
     }
-    
+
     open func append(_ child: Child) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-        
         children.append(child)
         child.parent = self
     }
@@ -40,10 +40,20 @@ open class BsCollectionViewDataSource: NSObject {
     }
     
     open func insert(_ child: Child, at index: Int) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-
         children.insert(child, at: index)
         child.parent = self
+    }
+    
+    open func replace(childAt index: Int, with child: Child) {
+        if children.contains(child), let otherIndex = children.firstIndex(of: child) {
+            children.swapAt(index, otherIndex)
+        } else {
+            child.removeFromParent()
+            children[index] = child
+            child.parent = self
+        }
     }
     
     open func remove(at index: Int) {
@@ -56,19 +66,19 @@ open class BsCollectionViewDataSource: NSObject {
             remove(at: index)
         }
     }
-
+    
     open func remove(children: [Child]) {
         for child in children {
             remove(child)
         }
     }
-
+    
     open func removeAll() {
         for i in 0..<children.count {
             remove(at: i)
         }
     }
-        
+    
     open func child(at index: Int) -> Child {
         children[index]
     }
@@ -79,10 +89,7 @@ open class BsCollectionViewDataSource: NSObject {
     
     open subscript(index: Int) -> Child {
         set {
-            newValue.removeFromParent()
-            
-            children[index] = newValue
-            newValue.parent = self
+            replace(childAt: index, with: newValue)
         }
         get {
             children[index]

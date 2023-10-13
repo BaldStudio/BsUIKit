@@ -34,16 +34,16 @@ open class BsTableViewSection: NSObject {
     }
     
     open var isEmpty: Bool {
-        children.count < 1
+        children.isEmpty
     }
-    
+
     open var index: Int? {
         parent?.children.firstIndex(of: self)
     }
     
     open func append(_ child: Child) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-        
         children.append(child)
         child.parent = self
     }
@@ -55,17 +55,20 @@ open class BsTableViewSection: NSObject {
     }
     
     open func insert(_ child: Child, at index: Int) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-        
         children.insert(child, at: index)
         child.parent = self
     }
     
     open func replace(childAt index: Int, with child: Child) {
-        child.removeFromParent()
-        
-        children[index] = child
-        child.parent = self
+        if children.contains(child), let otherIndex = children.firstIndex(of: child) {
+            children.swapAt(index, otherIndex)
+        } else {
+            child.removeFromParent()
+            children[index] = child
+            child.parent = self
+        }
     }
     
     open func remove(at index: Int) {
@@ -86,8 +89,8 @@ open class BsTableViewSection: NSObject {
     }
     
     open func removeAll() {
-        for i in 0..<children.count {
-            remove(at: i)
+        for child in children.reversed() {
+            remove(child)
         }
     }
     
@@ -115,11 +118,22 @@ open class BsTableViewSection: NSObject {
     // MARK: - Header
     
     open var headerHeight: CGFloat = 0
+
+    /// 是否是自定义Header，为 true 时，默认的 headerTitle 样式会失效
+    var isCustomHeader = false
+
+    open var headerClass: UITableViewHeaderFooterView.Type = UITableViewHeaderFooterView.self {
+        didSet {
+            isCustomHeader = true
+        }
+    }
     
-    open var headerClass: UITableViewHeaderFooterView.Type = UITableViewHeaderFooterView.self
-    
-    open var headerNib: UINib?
-    
+    open var headerNib: UINib? {
+        didSet {
+            isCustomHeader = headerNib != nil
+        }
+    }
+
     open var headerTitle: String?
     
     open var headerReuseIdentifier: String {
@@ -155,10 +169,20 @@ open class BsTableViewSection: NSObject {
     
     open var footerHeight: CGFloat = 0
     
-    open var footerClass: UITableViewHeaderFooterView.Type = UITableViewHeaderFooterView.self
+    /// 是否是自定义 Footer，为 true 时，默认的 footerTitle 样式会失效
+    var isCustomFooter = false
+    open var footerClass: UITableViewHeaderFooterView.Type = UITableViewHeaderFooterView.self {
+        didSet {
+            isCustomFooter = true
+        }
+    }
     
-    open var footerNib: UINib?
-    
+    open var footerNib: UINib? {
+        didSet {
+            isCustomFooter = footerNib != nil
+        }
+    }
+
     open var footerTitle: String?
     
     open var footerReuseIdentifier: String {

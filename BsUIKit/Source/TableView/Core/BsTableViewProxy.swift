@@ -61,7 +61,16 @@ extension BsTableViewProxyImpl {
     func tableView(_ tableView: UITableView,
                    didEndDisplaying cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
-        proxy.dataSource[indexPath].tableView(tableView, didEndDisplaying: cell, forRowAt: indexPath)
+        // 数据源发生变化，执行remove时，会先触发这里，需要处理数组越界问题
+        // 此时外部 Item 对象不再触发该方法，如有特殊需要，可在其他类（如ViewController）实现该代理方法执行逻辑
+        guard indexPath.section < proxy.dataSource.count else {
+            return
+        }
+        let section = proxy.dataSource[indexPath.section]
+        guard indexPath.row < section.count else {
+            return
+        }
+        section[indexPath.row].tableView(tableView, didEndDisplaying: cell, forRowAt: indexPath)
     }
     
     func tableView(_ tableView: UITableView,
@@ -97,6 +106,11 @@ extension BsTableViewProxyImpl {
     
     func tableView(_ tableView: UITableView,
                    didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        // 数据源发生变化，执行remove时，会先触发这里，需要处理数组越界问题
+        // 此时外部 Item 对象不再触发该方法，如有特殊需要，可在其他类（如ViewController）实现该代理方法执行逻辑
+        guard section < proxy.dataSource.count else {
+            return
+        }
         proxy.dataSource[section].didEndDisplaying(header: view, in: section)
     }
     
@@ -130,6 +144,11 @@ extension BsTableViewProxyImpl {
     func tableView(_ tableView: UITableView,
                    didEndDisplayingFooterView view: UIView,
                    forSection section: Int) {
+        // 数据源发生变化，执行remove时，会先触发这里，需要处理数组越界问题
+        // 此时外部 Item 对象不再触发该方法，如有特殊需要，可在其他类（如ViewController）实现该代理方法执行逻辑
+        guard section < proxy.dataSource.count else {
+            return
+        }
         proxy.dataSource[section].didEndDisplaying(footer: view, in: section)
     }
     

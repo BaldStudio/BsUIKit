@@ -186,3 +186,81 @@ extension UIViewController {
 public extension SwiftX where T: UIViewController {
     var modalTransition: BsPresentationController? { this.bsModalTransition }
 }
+
+// MARK: - Alert PresentationController
+
+open class BsAlertPresentationController: BsPresentationController, UIViewControllerAnimatedTransitioning {
+    public override init(presentedViewController: UIViewController,
+                  presenting presentingViewController: UIViewController?) {
+        super.init(presentedViewController: presentedViewController,
+                   presenting: presentingViewController)
+        presentedViewController.modalTransitionStyle = .crossDissolve
+    }
+    
+    open override var frameOfPresentedViewInContainerView: CGRect {
+        guard let containerView = containerView else {
+            return .zero
+        }
+        let bounds = containerView.bounds;
+        let contentSize = size(forChildContentContainer: presentedViewController,
+                               withParentContainerSize:bounds.size)
+        var frame: CGRect = .zero
+        frame.size.width = AlertUtils.alertWidth
+        frame.size.height = contentSize.height
+        frame.origin.x = (bounds.width - frame.width) * 0.5
+        frame.origin.y = (bounds.height - contentSize.height - containerView.safeAreaInsets.vertical) * 0.5
+        return frame
+    }
+    
+    open func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        self
+    }
+    
+    open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        0.4
+    }
+    
+    open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let toView = transitionContext.view(forKey: .to) else { return }
+        
+        let container = transitionContext.containerView
+        container.addSubview(toView)
+        
+        let duration = transitionDuration(using: transitionContext)
+        
+        toView.alpha = 0
+        toView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+        
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 1,
+                       options: .curveEaseOut,
+                       animations: {
+            toView.alpha = 1
+            toView.transform = .identity
+        }, completion: { _ in
+            transitionContext.completeTransition(true)
+        })
+    }
+}
+
+// MARK: - ActionSheet PresentationController
+
+open class BsActionSheetPresentationController: BsPresentationController {
+    open override var frameOfPresentedViewInContainerView: CGRect {
+        guard let containerView = containerView else {
+            return .zero
+        }
+        let bounds = containerView.bounds;
+        let contentSize = size(forChildContentContainer: presentedViewController,
+                               withParentContainerSize:bounds.size)
+        var frame = bounds
+        frame.size.height = contentSize.height
+        frame.origin.y = bounds.maxY - contentSize.height - containerView.safeAreaInsets.bottom
+        return frame.insetBy(dx: AlertUtils.edgeInset, dy: 0)
+    }
+}
+

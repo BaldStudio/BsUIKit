@@ -64,7 +64,16 @@ extension BsCollectionViewProxyImpl {
     func collectionView(_ collectionView: UICollectionView,
                         didEndDisplaying cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        proxy.dataSource[indexPath].collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
+        // 数据源发生变化，执行remove时，会先触发这里，需要处理数组越界问题
+        // 此时外部 Item 对象不再触发该方法，如有特殊需要，可在其他类（如ViewController）实现该代理方法执行逻辑
+        guard indexPath.section < proxy.dataSource.count else {
+            return
+        }
+        let section = proxy.dataSource[indexPath.section]
+        guard indexPath.item < section.count else {
+            return
+        }
+        section[indexPath.item].collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
     }
 
 }
@@ -93,6 +102,11 @@ extension BsCollectionViewProxyImpl {
     func collectionView(_ collectionView: UICollectionView,
                         didEndDisplayingSupplementaryView view: UICollectionReusableView,
                         forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        // 数据源发生变化，执行remove时，会先触发这里，需要处理数组越界问题
+        // 此时外部 Item 对象不再触发该方法，如有特殊需要，可在其他类（如ViewController）实现该代理方法执行逻辑
+        guard indexPath.section < proxy.dataSource.count else {
+            return
+        }
         let element = proxy.dataSource[indexPath.section]
         if elementKind == UICollectionView.elementKindSectionHeader {
             element.didEndDisplaying(header: view, at: indexPath)

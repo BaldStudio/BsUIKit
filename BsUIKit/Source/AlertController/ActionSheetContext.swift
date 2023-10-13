@@ -17,8 +17,8 @@ final class ActionSheetContext {
         self.controller = controller
         controller.collectionView.append(section: primarySection)
         controller.collectionView.append(section: destructiveSection)
-        controller.bsModalTransition = PresentationController(presentedViewController: controller,
-                                                              presenting: nil)
+        controller.bsModalTransition = BsActionSheetPresentationController(presentedViewController: controller,
+                                                                           presenting: nil)
     }
     
     func append(_ action: BsAlertAction) {
@@ -54,26 +54,6 @@ final class ActionSheetContext {
     }
     
 }
-
-// MARK: - PresentationController
-
-private extension ActionSheetContext {
-    class PresentationController: BsPresentationController {
-        override var frameOfPresentedViewInContainerView: CGRect {
-            guard let containerView = containerView else {
-                return .zero
-            }
-            let bounds = containerView.bounds;
-            let contentSize = size(forChildContentContainer: presentedViewController,
-                                   withParentContainerSize:bounds.size)
-            var frame = bounds
-            frame.size.height = contentSize.height
-            frame.origin.y = bounds.maxY - contentSize.height - containerView.safeAreaInsets.bottom
-            return frame.insetBy(dx: AlertUtils.edgeInset, dy: 0)
-        }
-    }
-}
-
 
 // MARK: - Base
 
@@ -280,7 +260,7 @@ private final class TitleCell: ActionSheetBaseCell {
         stackView.distribution = .fill
         stackView.alignment = .fill
         contentView.addSubview(stackView)
-        stackView.bs.edgesEqualToSuperview(with: UIEdgeInsets(all: AlertUtils.titleMargin))
+        stackView.bs.edgesEqualToSuperview(with: .all(AlertUtils.titleMargin))
     }
     
 }

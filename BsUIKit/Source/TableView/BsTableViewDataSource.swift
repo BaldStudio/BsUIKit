@@ -23,12 +23,12 @@ open class BsTableViewDataSource: NSObject {
     }
     
     open var isEmpty: Bool {
-        children.count < 1
+        children.isEmpty
     }
-    
+
     open func append(_ child: Child) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-        
         children.append(child)
         child.parent = self
     }
@@ -40,17 +40,20 @@ open class BsTableViewDataSource: NSObject {
     }
     
     open func insert(_ child: Child, at index: Int) {
+        guard !children.contains(child) else { return }
         child.removeFromParent()
-        
         children.insert(child, at: index)
         child.parent = self
     }
     
     open func replace(childAt index: Int, with child: Child) {
-        child.removeFromParent()
-        
-        children[index] = child
-        child.parent = self
+        if children.contains(child), let otherIndex = children.firstIndex(of: child) {
+            children.swapAt(index, otherIndex)
+        } else {
+            child.removeFromParent()
+            children[index] = child
+            child.parent = self
+        }
     }
     
     open func remove(at index: Int) {
@@ -71,8 +74,8 @@ open class BsTableViewDataSource: NSObject {
     }
     
     open func removeAll() {
-        for i in 0..<children.count {
-            remove(at: i)
+        for child in children.reversed() {
+            remove(child)
         }
     }
     
@@ -86,10 +89,7 @@ open class BsTableViewDataSource: NSObject {
     
     open subscript(index: Int) -> Child {
         set {
-            newValue.removeFromParent()
-            
-            children[index] = newValue
-            newValue.parent = self
+            replace(childAt: index, with: newValue)
         }
         get {
             children[index]
@@ -104,7 +104,6 @@ open class BsTableViewDataSource: NSObject {
             self[indexPath.section][indexPath.row]
         }
     }
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -126,13 +125,13 @@ extension BsTableViewDataSource: UITableViewDataSource {
     }
     
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        self[section].headerTitle
+        return self[section].isCustomHeader ? nil : self[section].headerTitle
     }
     
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        self[section].footerTitle
+        return self[section].isCustomFooter ? nil : self[section].footerTitle
     }
-    
+
 }
 
 public extension BsTableViewDataSource {
